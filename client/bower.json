@@ -1,0 +1,15 @@
+{
+  "name": "client",
+  "homepage": "https://github.com/minya92/yiiDB",
+  "authors": [
+    "Mikhail Lapshin <lapshin.michail@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "angular-route": "^1.5.8",
+    "angular": "1.5.8",
+    "bootstrap": "^3.3.7"
+  }
+}

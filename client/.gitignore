@@ -1,0 +1,8 @@
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# bower dir
+/assets
