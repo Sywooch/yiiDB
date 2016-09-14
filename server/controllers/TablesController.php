@@ -23,12 +23,60 @@ class TablesController extends Controller
         print_r(json_encode($m));
     }
 
-    public function actionCreate()
+    public function actionCreate($db = false)
     {
-        $sql = 'CREATE TABLE pet2 (name VARCHAR(20))';
-        $m = Yii::$app->db->createCommand($sql)->queryAll();
-        echo '<pre>';
-        //print_r($m);
+        print_r($this->createOrDropTable($db));
+    }
+
+    public function actionDrop($db = false)
+    {
+        print_r($this->createOrDropTable($db, true));
+    }
+
+    public function createOrDropTable($db = false, $drop = false)
+    {
+        if(!$db)
+            throw new yii\base\Exception('not fill db field');
+
+        $data = array(
+            'jsonrpc' => '2.0',
+            'method'  => 'yii'
+        );
+
+        if($drop)
+            $data['params'] =  ["migrate/create drop_" . $db . "_table"];
+        else
+            $data['params'] =  ["migrate/create create_" . $db . "_table"];
+
+        $options = array(
+            'http' => array(
+                'method'  => 'POST',
+                'content' => json_encode( $data ),
+                'header'=>  "Content-Type: application/json\r\n" .
+                    "Accept: application/json\r\n"
+            )
+        );
+        $context  = stream_context_create( $options );
+        file_get_contents('http://' . $_SERVER["HTTP_HOST"] . '/webshell/default/rpc', false, $context );
+
+        $data = array(
+            'jsonrpc' => '2.0',
+            'method'  => 'yii',
+            'params'  =>  ["migrate"]
+        );
+        $options = array(
+            'http' => array(
+                'method'  => 'POST',
+                'content' => json_encode( $data ),
+                'header'=>  "Content-Type: application/json\r\n" .
+                    "Accept: application/json\r\n"
+            )
+        );
+        $context  = stream_context_create( $options );
+        $result = file_get_contents('http://' . $_SERVER["HTTP_HOST"] . '/webshell/default/rpc', false, $context );
+
+        $response = json_decode( $result );
+        return $response;
     }
 
 }

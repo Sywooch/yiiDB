@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation for table `test1`.
+ * Handles the creation for table `test2`.
  */
-class m160914_092316_create_test1_table extends Migration
+class m160914_135146_create_test2_table extends Migration
 {
     /**
      * @inheritdoc
      */
     public function up()
     {
-        $this->createTable('test1', [
+        $this->createTable('test2', [
             'id' => $this->primaryKey(),
         ]);
     }
@@ -22,6 +22,6 @@ class m160914_092316_create_test1_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('test1');
+        $this->dropTable('test2');
     }
 }

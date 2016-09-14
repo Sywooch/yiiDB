@@ -3,6 +3,12 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
+    'modules' => [
+        'webshell' => [
+            'class' => 'samdark\webshell\Module',
+            'allowedIPs' => ['127.0.0.1'],
+        ],
+    ],
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
