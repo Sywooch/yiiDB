@@ -4,6 +4,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="assets/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="assets/bootstrap/dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/angular-ui-grid/ui-grid.min.css">
     <link rel="stylesheet" href="styles/main.css"/>
 </head>
 <body ng-controller="index">
@@ -37,8 +38,11 @@
 
 </div> <!-- /container -->
 
+<script src="assets/jquery/dist/jquery.min.js"></script>
+<script src="assets/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/angular/angular.min.js"></script>
 <script src="assets/angular-route/angular-route.min.js"></script>
+<script src="assets/angular-ui-grid/ui-grid.min.js"></script>
 <script src="app.js"></script>
 <script src="controllers/site.js"></script>
 </body>

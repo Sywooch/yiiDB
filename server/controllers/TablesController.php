@@ -9,34 +9,49 @@ class TablesController extends Controller
 
     public function actionAll()
     {
-        $sql = 'SHOW TABLES';
-        $m = Yii::$app->db->createCommand($sql)->queryColumn();
-        print_r(json_encode($m));
+        print_r(json_encode($this->getTables()));
     }
 
-    public function actionGet($db = false)
+    public function actionGet($name = false)
     {
-        if(!$db)
-            throw new yii\base\Exception('not fill db field');
-        $sql = 'DESCRIBE ' . $db;
+        if(!$name)
+            throw new yii\base\Exception('not fill name field');
+        $sql = 'DESCRIBE ' . $name;
         $m = Yii::$app->db->createCommand($sql)->queryAll();
         print_r(json_encode($m));
     }
 
-    public function actionCreate($db = false)
+    public function actionCreate($name = false)
     {
-        print_r($this->createOrDropTable($db));
+        $tables = $this->getTables();
+        foreach ($tables as $row){
+            if($row['table'] == $name){
+                throw new yii\base\Exception('db name is busy');
+            }
+        }
+        print_r($this->createOrDropTable($name));
     }
 
-    public function actionDrop($db = false)
+    public function actionDrop($name = false)
     {
-        print_r($this->createOrDropTable($db, true));
+        print_r($this->createOrDropTable($name, true));
     }
 
-    public function createOrDropTable($db = false, $drop = false)
+    private function getTables(){
+        $sql = 'SHOW TABLES';
+        $query = Yii::$app->db->createCommand($sql)->queryColumn();
+        $response = [];
+        foreach ($query as $i => $item)
+        {
+            $response[$i]['table'] = $item;
+        }
+        return $response;
+    }
+
+    private function createOrDropTable($name = false, $drop = false)
     {
-        if(!$db)
-            throw new yii\base\Exception('not fill db field');
+        if(!$name)
+            throw new yii\base\Exception('not fill name field');
 
         $data = array(
             'jsonrpc' => '2.0',
@@ -44,9 +59,9 @@ class TablesController extends Controller
         );
 
         if($drop)
-            $data['params'] =  ["migrate/create drop_" . $db . "_table"];
+            $data['params'] =  ["migrate/create drop_" . $name . "_table"];
         else
-            $data['params'] =  ["migrate/create create_" . $db . "_table"];
+            $data['params'] =  ["migrate/create create_" . $name . "_table"];
 
         $options = array(
             'http' => array(

@@ -1,15 +1,19 @@
 'use strict';
-// Ссылка на серверную часть приложения
+// РЎСЃС‹Р»РєР° РЅР° СЃРµСЂРІРµСЂРЅСѓСЋ С‡Р°СЃС‚СЊ РїСЂРёР»РѕР¶РµРЅРёСЏ
 var serviceBase = 'http://server.local';
-// Основной модуль приложения и его компоненты
+// РћСЃРЅРѕРІРЅРѕР№ РјРѕРґСѓР»СЊ РїСЂРёР»РѕР¶РµРЅРёСЏ Рё РµРіРѕ РєРѕРјРїРѕРЅРµРЅС‚С‹
 var yiiDB = angular.module('yiiDB', [
   'ngRoute',
-  'yiiDB.site'
+  'yiiDB.site',
+  'ui.grid',
+  'ui.grid.selection'
 ]);
-// рабочий модуль
+// СЂР°Р±РѕС‡РёР№ РјРѕРґСѓР»СЊ
 var yiiDB_site = angular.module('yiiDB.site', ['ngRoute']);
+
+
  
 yiiDB.config(['$routeProvider', function($routeProvider) {
-  // Маршрут по-умолчанию
+  // РњР°СЂС€СЂСѓС‚ РїРѕ-СѓРјРѕР»С‡Р°РЅРёСЋ
   $routeProvider.otherwise({redirectTo: '/site/index'});
 }]);

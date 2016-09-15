@@ -6,3 +6,9 @@ body {
 .navbar {
     margin-bottom: 20px;
 }
+
+.grid {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-top: 15px;
+}
