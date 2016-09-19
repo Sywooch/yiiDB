@@ -45,5 +45,6 @@
 <script src="assets/angular-ui-grid/ui-grid.min.js"></script>
 <script src="app.js"></script>
 <script src="controllers/site.js"></script>
+<script src="controllers/test.js"></script>
 </body>
 </html>

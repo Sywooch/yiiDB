@@ -1,11 +1,40 @@
 <div class="jumbotron text-left">
     <div class="row">
         <div class="col-lg-4">
-            <button type="button" id="addTable" class="btn btn-success" ng-click="addTable()">Создать таблицу</button>
-            <button type="button" id="removeTable" class="btn btn-success" ng-click="removeTable()">Удалить таблицу</button>
+            <button type="button" id="addTable" class="btn btn-success btn-xs" ng-click="addTable()">Создать таблицу</button>
+            <button type="button" id="removeTable" class="btn btn-danger btn-xs" ng-click="removeTable()">Удалить таблицу</button>
             <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
         </div>
-        <div class="col-md-9"></div>
+        <div class="col-lg-7">
+            <button type="button" class="btn btn-success btn-xs" ng-click="migrate()">Создать и применить миграцию</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Поле</th>
+                        <th>Тип</th>
+                        <th>Длина</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="field in fields track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td><input type="text" ng-model="fields[$index].Field"></td>
+                        <td><input type="text" ng-model="fields[$index].Type"></td>
+                        <td><input type="text" ng-model="fields[$index].Length"></td>
+                        <td><button class="btn btn-danger btn-xs" ng-click="delField($index)">Удалить</button></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="text" placeholder="Название"  ng-model="field.Name"></td>
+                        <td><input type="text" placeholder="Тип"  ng-model="field.Type"></td>
+                        <td><input type="text" placeholder="Длина"  ng-model="field.Length"></td>
+                        <td><button class="btn btn-success btn-xs" ng-click="addField()">Добавить</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

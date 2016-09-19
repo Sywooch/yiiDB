@@ -1,0 +1,6 @@
+<div ng-controller="test">
+    I have {{friends.length}} friends. They are:
+    <li class="animate-repeat" ng-repeat="friend in friends">
+        [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
+    </li>
+</div>

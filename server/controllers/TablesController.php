@@ -13,16 +13,6 @@ class TablesController extends Controller
         print_r(json_encode($this->getTables()));
     }
 
-    public function actionGet($name = false)
-    {
-        if(!$name)
-            throw new yii\base\Exception("not fill name field");
-        $sql = "DESCRIBE " . $name;
-        $m = Yii::$app->db->createCommand($sql)->queryAll();
-        print_r(json_encode($m));
-    }
-
-
     public function actionTest()
     {
        print_r(Migration::executeCommand("migrate"));
