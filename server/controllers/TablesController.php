@@ -30,7 +30,7 @@ class TablesController extends Controller
             }
         }
         //print_r($this->createOrDropTable($name));
-        print_r(Migration::executeCommand("migrate/create create_" . $name . "_table"));
+        print_r(Migration::executeCommand("migrate/create create_" . $name . "_table --fields=name:string(128)"));
         print_r(Migration::executeCommand("migrate"));
     }
 

@@ -112,6 +112,13 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
         }
 
         $scope.migrate = function(){
+            // $scope.fields.forEach(function(field){
+            //     switch (field.Type) {
+            //         case 'int' : field.Type = 'integer'; break;
+            //         case 'varchar': field.Type = 'string'; break;
+            //     }
+            // })
+            console.log($scope.fields);
             $http.get('/fields/migrate/?table='+$scope.selectedTable+'&data=' + encodeURIComponent(JSON.stringify($scope.fields)))
                 .success(function(data) {
                     console.log(data);

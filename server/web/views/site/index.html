@@ -21,14 +21,27 @@
                     <tr ng-repeat="field in fields track by $index">
                         <td>{{$index + 1}}</td>
                         <td><input type="text" ng-model="fields[$index].Field"></td>
-                        <td><input type="text" ng-model="fields[$index].Type"></td>
+                        <!--<td><input type="text" ng-model="fields[$index].Type"></td>-->
+                        <td>
+                            <select size="1" ng-model="fields[$index].Type">
+                                <option value="string" ng-selected="fields[$index].Type == 'string'">string</option>
+                                <option value="integer" ng-selected="fields[$index].Type == 'integer'">integer</option>
+                                <option value="boolean" ng-selected="fields[$index].Type == 'boolean'">boolean</option>
+                            </select>
+                        </td>
                         <td><input type="text" ng-model="fields[$index].Length"></td>
                         <td><button class="btn btn-danger btn-xs" ng-click="delField($index)">Удалить</button></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td><input type="text" placeholder="Название"  ng-model="field.Name"></td>
-                        <td><input type="text" placeholder="Тип"  ng-model="field.Type"></td>
+                        <td>
+                            <select size="1" ng-model="field.Type">
+                                <option value="string">string</option>
+                                <option value="integer">integer</option>
+                                <option value="boolean">boolean</option>
+                            </select>
+                        </td>
                         <td><input type="text" placeholder="Длина"  ng-model="field.Length"></td>
                         <td><button class="btn btn-success btn-xs" ng-click="addField()">Добавить</button></td>
                     </tr>

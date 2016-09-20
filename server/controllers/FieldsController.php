@@ -16,14 +16,52 @@ class FieldsController extends Controller
     public function actionMigrate($data = null, $table = null)
     {
         $data = json_decode($data);
-        //print_r($data);
-        $req = '';
-        foreach ($data as $d)
+        $toDelete = [];
+        $fields = $this->getFields($table);
+        foreach ($fields as $i)
         {
-            $req = (!$req ? $req : ($req . ',')) . $d->Field . ':' . $d->Type . '(' . $d->Length . ')';
+            $match = false;
+            foreach ($data as $key => $j)
+            {
+                if($i['Field'] == $j->Field){
+                    if($j->Type == $i['Type'] && $j->Length == $i['Length']){
+                        $match = true;
+                        unset($data[$key]);
+                    }
+                }
+
+            }
+            if(!$match)
+                array_push($toDelete, $i);
         }
-        print_r(Migration::executeCommand('migrate/create add_' . $data[0]->Field . '_column_to_' . $table . '_table --fields=' . $req));
-        print_r(Migration::executeCommand("migrate"));
+        echo('!!!!!!!!!!!!!!');
+        print_r($toDelete);
+        print_r($data);
+        if(count($toDelete)){ // Сначала создать миграцию на удаление
+            $exec = '';
+            foreach ($toDelete as $d)
+            {
+                $exec = (!$exec ? $exec : ($exec . ',')) . $d['Field'] . ':' . $d['Type'] . '(' . $d['Length'] . ')';
+            }
+            echo $exec;
+            print_r(Migration::executeCommand('migrate/create drop_' . $toDelete[0]['Field'] . '_column_from_' . $table . '_table --fields=' . $exec));
+            sleep(2);
+        }
+        if(count($data)){ //миграция на добавление столбцов
+            $exec = '';
+            $index = null;
+            foreach ($data as $i => $d)
+            {
+                $index = $i;
+                if($d->Field != 'id')
+                    $exec = (!$exec ? $exec : ($exec . ',')) . $d->Field . ':' . $d->Type . '(' . $d->Length . ')';
+            }
+            echo $exec;
+            print_r(Migration::executeCommand('migrate/create add_' . $data[$index]->Field . '_column_to_' . $table . '_table --fields=' . $exec));
+            print_r(Migration::executeCommand("migrate"));
+        }
+//        print_r(Migration::executeCommand('migrate/create add_' . $data[0]->Field . '_column_to_' . $table . '_table --fields=' . $exec));
+//        print_r(Migration::executeCommand("migrate"));
     }
 
     public function actionCreate($table = false, $field = false)
@@ -58,6 +96,10 @@ class FieldsController extends Controller
         {
             $res[$i]['Length'] = explode(')', explode('(', $row['Type'])[1])[0];
             $res[$i]['Type'] = explode('(', $row['Type'])[0];
+            switch ($res[$i]['Type']){
+                case 'int' : $res[$i]['Type'] = 'integer'; break;
+                case 'varchar' : $res[$i]['Type'] = 'string'; break;
+            }
         }
         return $res;
     }
