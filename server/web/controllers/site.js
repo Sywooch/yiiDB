@@ -4,9 +4,9 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
                 templateUrl: 'views/site/index.html',
                 controller: 'index'
             })
-            .when('/test', {
-                templateUrl: 'views/test.html',
-                controller: 'test'
+            .when('/site/migration', {
+                templateUrl: 'views/site/migration.html',
+                controller: 'migration'
             })
             .otherwise({
                 redirectTo: '/site/index'
@@ -76,9 +76,13 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
             $http.get('/tables/all')
                 .success(function(data) {
                     console.log(data);
+                    data.forEach(function (row, i) {
+                        if(row.table == 'migration') // системная таблица, лучше ее не трогать
+                            delete(data[i]);
+                    })
                     $scope.gridOptions.data = data;
                     // console.log($scope);
-                    // $interval( function() {$scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);}, 0, 1);
+                     $interval( function() {$scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);}, 0, 1);
                 })
                 .error(function(){
                     alert('Ошибка при загрузке списка таблиц')
@@ -99,12 +103,16 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
         }
 
         $scope.addField = function(){
-            $scope.fields.push({
-                Field:  $scope.field.Name,
-                Type:   $scope.field.Type,
-                Length: $scope.field.Length,
-            })
-            $scope.field = null;
+            if($scope.field && $scope.field.Name && $scope.field.Type && $scope.field.Length) {
+                $scope.fields.push({
+                    Field: $scope.field.Name,
+                    Type: $scope.field.Type,
+                    Length: $scope.field.Length,
+                })
+                $scope.field = null;
+            } else {
+                alert('запонены не все поля!');
+            }
         };
 
         $scope.delField = function(index){
@@ -112,12 +120,6 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
         }
 
         $scope.migrate = function(){
-            // $scope.fields.forEach(function(field){
-            //     switch (field.Type) {
-            //         case 'int' : field.Type = 'integer'; break;
-            //         case 'varchar': field.Type = 'string'; break;
-            //     }
-            // })
             console.log($scope.fields);
             $http.get('/fields/migrate/?table='+$scope.selectedTable+'&data=' + encodeURIComponent(JSON.stringify($scope.fields)))
                 .success(function(data) {

@@ -90,7 +90,7 @@ class FieldsController extends Controller
     private function getFields($table){
         if(!$table)
             throw new yii\base\Exception("not fill name field");
-        $sql = "DESCRIBE " . $table;
+        $sql = "DESCRIBE `" . $table . "`";
         $res = Yii::$app->db->createCommand($sql)->queryAll();
         foreach ($res as $i => $row)
         {

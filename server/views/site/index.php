@@ -24,7 +24,8 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#/site/index">Главная</a></li>
+                    <li><a href="#/site/migration">История миграций</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -45,6 +46,6 @@
 <script src="assets/angular-ui-grid/ui-grid.min.js"></script>
 <script src="app2.js"></script>
 <script src="controllers/site.js"></script>
-<script src="controllers/test.js"></script>
+<script src="controllers/migration.js"></script>
 </body>
 </html>

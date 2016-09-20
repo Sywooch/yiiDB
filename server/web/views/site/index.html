@@ -19,17 +19,22 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="field in fields track by $index">
+                        <!--<td>{{$index + 1}}</td>-->
+                        <!--<td><input type="text" ng-model="fields[$index].Field"></td>-->
+                        <!--&lt;!&ndash;<td><input type="text" ng-model="fields[$index].Type"></td>&ndash;&gt;-->
+                        <!--<td>-->
+                            <!--<select size="1" ng-model="fields[$index].Type">-->
+                                <!--<option value="string" ng-selected="fields[$index].Type == 'string'">string</option>-->
+                                <!--<option value="integer" ng-selected="fields[$index].Type == 'integer'">integer</option>-->
+                                <!--<option value="boolean" ng-selected="fields[$index].Type == 'boolean'">boolean</option>-->
+                            <!--</select>-->
+                        <!--</td>-->
+                        <!--<td><input type="text" ng-model="fields[$index].Length"></td>-->
+                        <!--<td><button class="btn btn-danger btn-xs" ng-click="delField($index)">Удалить</button></td>-->
                         <td>{{$index + 1}}</td>
-                        <td><input type="text" ng-model="fields[$index].Field"></td>
-                        <!--<td><input type="text" ng-model="fields[$index].Type"></td>-->
-                        <td>
-                            <select size="1" ng-model="fields[$index].Type">
-                                <option value="string" ng-selected="fields[$index].Type == 'string'">string</option>
-                                <option value="integer" ng-selected="fields[$index].Type == 'integer'">integer</option>
-                                <option value="boolean" ng-selected="fields[$index].Type == 'boolean'">boolean</option>
-                            </select>
-                        </td>
-                        <td><input type="text" ng-model="fields[$index].Length"></td>
+                        <td>{{field.Field}}</td>
+                        <td>{{field.Type}}</td>
+                        <td>{{field.Length}}</td>
                         <td><button class="btn btn-danger btn-xs" ng-click="delField($index)">Удалить</button></td>
                     </tr>
                     <tr>
