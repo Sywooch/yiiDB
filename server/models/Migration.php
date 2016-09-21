@@ -18,7 +18,7 @@ class Migration
             'method'  => 'yii'
         );
 
-        $data['params'] =  [$cmd];
+        $data['params'] =  [$cmd . " --interactive=0"]; //режим без подтверждения (yes|no)
 
         $options = array(
             'http' => array(
