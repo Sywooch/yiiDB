@@ -23,7 +23,8 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
                     name: 'table', displayName: 'Список таблиц',
                     filter: {
                         placeholder: 'Поиск'
-                    }
+                    },
+                    enableHiding: false
                 },
             ],
             enableRowSelection: true,
@@ -129,6 +130,7 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
                     .success(function (data) {
                         console.log(data);
                         $scope.info = ''
+                        setTable($scope.selectedTable);
                     })
             } else {
                 alert('Нет полей, нужно удалять саму таблицу');

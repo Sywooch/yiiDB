@@ -44,9 +44,7 @@ class FieldsController extends Controller
                 if($d->Field != 'id')
                     $exec = (!$exec ? $exec : ($exec . ',')) . $d->Field . ':' . $d->Type . '(' . $d->Length . ')';
             }
-            echo $exec;
             print_r(Migration::executeCommand('migrate/create add_' . $data[$index]->Field . '_column_to_' . $table . '_table --fields=' . $exec));
-            sleep(2);
         }
         if(count($toDelete)){ // создать миграцию на удаление
             $exec = '';
@@ -55,7 +53,6 @@ class FieldsController extends Controller
                 $length = $d['Length'] ? '(' . $d['Length'] . ')' : ''; //(30) или ничего
                 $exec = (!$exec ? $exec : ($exec . ',')) . $d['Field'] . ':' . $d['Type'] . $length;
             }
-            echo $exec;
             print_r(Migration::executeCommand('migrate/create drop_' . $toDelete[0]['Field'] . '_column_from_' . $table . '_table --fields=' . $exec));
         }
         print_r(Migration::executeCommand("migrate"));
