@@ -103,11 +103,11 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
         }
 
         $scope.addField = function(){
-            if($scope.field && $scope.field.Name && $scope.field.Type && $scope.field.Length) {
+            if($scope.field && $scope.field.Name && $scope.field.Type) {
                 $scope.fields.push({
                     Field: $scope.field.Name,
                     Type: $scope.field.Type,
-                    Length: $scope.field.Length,
+                    Length: $scope.field.Length ? $scope.field.Length : 0,
                 })
                 $scope.field = null;
             } else {

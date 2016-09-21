@@ -21,7 +21,7 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
             })
 
         $scope.applyMigration = function(name){
-            $http.get('/migration/apply?name=' + name)
+            $http.get('/migration/apply' + (name ? '?name=' + name : ''))
                 .success(function (data) {
                     window.location.href = '/';
                 })

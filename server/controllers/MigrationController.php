@@ -18,8 +18,8 @@ class MigrationController extends Controller
     public function actionApply($name = false)
     {
         if(!$name)
-            throw new yii\base\Exception('not fill name field');
-        
-        print_r(Migration::executeCommand("migrate/to " . $name));
+            print_r(Migration::executeCommand("migrate"));
+        else
+            print_r(Migration::executeCommand("migrate/to " . $name));
     }
 }

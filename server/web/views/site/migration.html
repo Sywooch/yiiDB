@@ -1,5 +1,5 @@
 <div class="jumbotron text-left" ng-controller="migration">
-    <table class="table">
+    <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th>#</th>
@@ -15,4 +15,5 @@
         </tr>
         </tbody>
     </table>
+    <button class="btn btn-info" ng-click="applyMigration()">Применить все миграции (yii migrate)</button>
 </div>

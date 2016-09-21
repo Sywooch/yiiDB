@@ -41,7 +41,8 @@ class FieldsController extends Controller
             $exec = '';
             foreach ($toDelete as $d)
             {
-                $exec = (!$exec ? $exec : ($exec . ',')) . $d['Field'] . ':' . $d['Type'] . '(' . $d['Length'] . ')';
+                $length = $d['Length'] ? '(' . $d['Length'] . ')' : ''; //(30) или ничего
+                $exec = (!$exec ? $exec : ($exec . ',')) . $d['Field'] . ':' . $d['Type'] . $length;
             }
             echo $exec;
             print_r(Migration::executeCommand('migrate/create drop_' . $toDelete[0]['Field'] . '_column_from_' . $table . '_table --fields=' . $exec));
@@ -94,7 +95,7 @@ class FieldsController extends Controller
         $res = Yii::$app->db->createCommand($sql)->queryAll();
         foreach ($res as $i => $row)
         {
-            $res[$i]['Length'] = explode(')', explode('(', $row['Type'])[1])[0];
+            $res[$i]['Length'] =  isset(explode('(', $row['Type'])[1]) ? explode(')', explode('(', $row['Type'])[1])[0] : 0;
             $res[$i]['Type'] = explode('(', $row['Type'])[0];
             switch ($res[$i]['Type']){
                 case 'int' : $res[$i]['Type'] = 'integer'; break;

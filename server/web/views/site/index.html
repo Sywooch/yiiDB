@@ -7,7 +7,7 @@
         </div>
         <div class="col-lg-7">
             <button type="button" class="btn btn-success btn-xs" ng-click="migrate()">Создать и применить миграцию</button>
-            <table class="table">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -43,11 +43,15 @@
                         <td>
                             <select size="1" ng-model="field.Type">
                                 <option value="string">string</option>
+                                <option value="text">text</option>
                                 <option value="integer">integer</option>
                                 <option value="boolean">boolean</option>
+                                <option value="date">date</option>
+                                <option value="datetime">datetime</option>
+                                <option value="timestamp">timestamp</option>
                             </select>
                         </td>
-                        <td><input type="text" placeholder="Длина"  ng-model="field.Length"></td>
+                        <td><input type="number" placeholder="Длина"  ng-model="field.Length"></td>
                         <td><button class="btn btn-success btn-xs" ng-click="addField()">Добавить</button></td>
                     </tr>
                 </tbody>
