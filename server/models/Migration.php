@@ -13,26 +13,28 @@ class Migration
 {
     public static function executeCommand($cmd = null)
     {
-        $data = array(
-            'jsonrpc' => '2.0',
-            'method'  => 'yii'
-        );
+//        $data = array(
+//            'jsonrpc' => '2.0',
+//            'method'  => 'yii'
+//        );
+//
+//        $data['params'] =  [$cmd . " --interactive=0"]; //режим без подтверждения (yes|no)
+//
+//        $options = array(
+//            'http' => array(
+//                'method'  => 'POST',
+//                'content' => json_encode( $data ),
+//                'header'=>  "Content-Type: application/json\r\n" .
+//                    "Accept: application/json\r\n"
+//            )
+//        );
+//        $context  = stream_context_create( $options );
+//
+//        $result = file_get_contents('http://' . $_SERVER["HTTP_HOST"] . '/webshell/default/rpc', false, $context );
+//
+//        $response = json_decode( $result );
+        //return $response;
 
-        $data['params'] =  [$cmd . " --interactive=0"]; //режим без подтверждения (yes|no)
-
-        $options = array(
-            'http' => array(
-                'method'  => 'POST',
-                'content' => json_encode( $data ),
-                'header'=>  "Content-Type: application/json\r\n" .
-                    "Accept: application/json\r\n"
-            )
-        );
-        $context  = stream_context_create( $options );
-
-        $result = file_get_contents('http://' . $_SERVER["HTTP_HOST"] . '/webshell/default/rpc', false, $context );
-
-        $response = json_decode( $result );
-        return $response;
+        echo exec(Yii::getAlias('@app') . '/yii ' . $cmd . " --interactive=0");
     }
 }
