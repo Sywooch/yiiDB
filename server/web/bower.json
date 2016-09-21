@@ -12,5 +12,8 @@
     "angular": "1.5.8",
     "bootstrap": "^3.3.7",
     "angular-ui-grid": "^3.2.7"
+  },
+  "resolutions": {
+    "angular": "1.5.8"
   }
 }
