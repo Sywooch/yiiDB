@@ -29,25 +29,12 @@ class FieldsController extends Controller
                         unset($data[$key]);
                     }
                 }
-
             }
             if(!$match)
                 array_push($toDelete, $i);
         }
-        echo('!!!!!!!!!!!!!!');
         print_r($toDelete);
         print_r($data);
-        if(count($toDelete)){ // Сначала создать миграцию на удаление
-            $exec = '';
-            foreach ($toDelete as $d)
-            {
-                $length = $d['Length'] ? '(' . $d['Length'] . ')' : ''; //(30) или ничего
-                $exec = (!$exec ? $exec : ($exec . ',')) . $d['Field'] . ':' . $d['Type'] . $length;
-            }
-            echo $exec;
-            print_r(Migration::executeCommand('migrate/create drop_' . $toDelete[0]['Field'] . '_column_from_' . $table . '_table --fields=' . $exec));
-            sleep(2);
-        }
         if(count($data)){ //миграция на добавление столбцов
             $exec = '';
             $index = null;
@@ -59,10 +46,19 @@ class FieldsController extends Controller
             }
             echo $exec;
             print_r(Migration::executeCommand('migrate/create add_' . $data[$index]->Field . '_column_to_' . $table . '_table --fields=' . $exec));
+            sleep(2);
+        }
+        if(count($toDelete)){ // создать миграцию на удаление
+            $exec = '';
+            foreach ($toDelete as $d)
+            {
+                $length = $d['Length'] ? '(' . $d['Length'] . ')' : ''; //(30) или ничего
+                $exec = (!$exec ? $exec : ($exec . ',')) . $d['Field'] . ':' . $d['Type'] . $length;
+            }
+            echo $exec;
+            print_r(Migration::executeCommand('migrate/create drop_' . $toDelete[0]['Field'] . '_column_from_' . $table . '_table --fields=' . $exec));
             print_r(Migration::executeCommand("migrate"));
         }
-//        print_r(Migration::executeCommand('migrate/create add_' . $data[0]->Field . '_column_to_' . $table . '_table --fields=' . $exec));
-//        print_r(Migration::executeCommand("migrate"));
     }
 
     public function actionCreate($table = false, $field = false)

@@ -121,10 +121,14 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
 
         $scope.migrate = function(){
             console.log($scope.fields);
-            $http.get('/fields/migrate/?table='+$scope.selectedTable+'&data=' + encodeURIComponent(JSON.stringify($scope.fields)))
-                .success(function(data) {
-                    console.log(data);
-                })
+            if($scope.fields.length) {
+                $http.get('/fields/migrate/?table=' + $scope.selectedTable + '&data=' + encodeURIComponent(JSON.stringify($scope.fields)))
+                    .success(function (data) {
+                        console.log(data);
+                    })
+            } else {
+                alert('Нет полей, нужно удалять саму таблицу');
+            }
         }
         getTables();
     }])
