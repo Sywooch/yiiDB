@@ -41,6 +41,8 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
                 $scope.selectedTable = row.entity.table;
                 setTable(row.entity.table);
             });
+
+            getTables();
         };
 
         $scope.addTable = function() {
@@ -82,7 +84,7 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
                     })
                     $scope.gridOptions.data = data;
                     // console.log($scope);
-                     $interval( function() {$scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);}, 0, 1);
+                    $interval( function() {$scope.gridApi.selection.selectRow($scope.gridOptions.data[0]);}, 0, 1);
                 })
                 .error(function(){
                     alert('Ошибка при загрузке списка таблиц')
@@ -122,13 +124,14 @@ yiiDB_site.config(['$routeProvider', function ($routeProvider) {
         $scope.migrate = function(){
             console.log($scope.fields);
             if($scope.fields.length) {
+                $scope.info = 'Ожидайте...'
                 $http.get('/fields/migrate/?table=' + $scope.selectedTable + '&data=' + encodeURIComponent(JSON.stringify($scope.fields)))
                     .success(function (data) {
                         console.log(data);
+                        $scope.info = ''
                     })
             } else {
                 alert('Нет полей, нужно удалять саму таблицу');
             }
         }
-        getTables();
     }])

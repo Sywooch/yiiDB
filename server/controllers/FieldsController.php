@@ -57,8 +57,8 @@ class FieldsController extends Controller
             }
             echo $exec;
             print_r(Migration::executeCommand('migrate/create drop_' . $toDelete[0]['Field'] . '_column_from_' . $table . '_table --fields=' . $exec));
-            print_r(Migration::executeCommand("migrate"));
         }
+        print_r(Migration::executeCommand("migrate"));
     }
 
     public function actionCreate($table = false, $field = false)
